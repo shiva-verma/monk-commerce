@@ -5,47 +5,72 @@ import {
   getApplicableCoupons,
 } from "../services/discountService";
 import { cartSchema } from "../model/cartSchema";
-import { badRequest, notFound, ok } from "../utils/httpResponse";
 import { getCouponById } from "../services/couponService";
 
 export function applyCouponController(req: Request, res: Response) {
   const cart = req.body;
   const couponId = req.params.couponId;
 
+  // Validate cart input
   const validation = cartSchema.safeParse(cart);
-
   if (!validation.success) {
-    return badRequest(res, validation.error.message);
+    throw {
+      status: 422,
+      code: "VALIDATION_ERROR",
+      message: "Cart validation failed",
+      details: validation.error.issues,
+    };
   }
 
-  // check if couponId is provided
-  let coupon = getCouponById(couponId);
-
+  // Check coupon existence
+  const coupon = getCouponById(couponId);
   if (!coupon) {
-    return notFound(res, "coupon not found");
+    throw {
+      status: 404,
+      code: "NOT_FOUND",
+      message: "Coupon not found",
+    };
   }
 
+  // Check if coupon applicable
   const isApplicable = checkIsCouponApplicable(coupon, cart);
-
   if (!isApplicable) {
-    return badRequest(res, "Coupon is not applicable");
+    throw {
+      status: 400,
+      code: "COUPON_NOT_APPLICABLE",
+      message: "Coupon is not applicable to this cart",
+    };
   }
 
   const discountResult = applyCoupon(cart, coupon);
 
-  ok(res, discountResult);
+  // Success response
+  return res.status(200).json({
+    success: true,
+    statusCode: 200,
+    data: discountResult,
+  });
 }
 
 export function getApplicableCouponsController(req: Request, res: Response) {
   const cart = req.body;
 
+  // Validate cart input
   const validation = cartSchema.safeParse(cart);
-
   if (!validation.success) {
-    return badRequest(res, validation.error.message);
+    throw {
+      status: 422,
+      code: "VALIDATION_ERROR",
+      message: "Cart validation failed",
+      details: validation.error.issues,
+    };
   }
 
   const applicableCoupons = getApplicableCoupons(cart);
 
-  ok(res, applicableCoupons);
+  return res.status(200).json({
+    success: true,
+    statusCode: 200,
+    data: applicableCoupons,
+  });
 }

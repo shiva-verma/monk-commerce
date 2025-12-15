@@ -1,5 +1,4 @@
 import { Router, Request, Response } from "express";
-import { notFound } from "../utils/httpResponse";
 import {
   getCouponByIdController,
   listCouponsController,
@@ -12,23 +11,31 @@ import {
   getApplicableCouponsController,
 } from "../controllers/discountController";
 import { maskExceptions } from "../utils/maskExceptions";
+import { notFound } from "../utils/httpResponse";
 
 const router = Router();
 
 // Health check endpoint
 router.get("/health", (req: Request, res: Response) => {
   res.status(200).json({
-    status: "OK",
-    message: "Discount service is running",
-    timestamp: new Date().toISOString(),
+    success: true,
+    statusCode: 200,
+    data: {
+      status: "OK",
+      message: "Discount service is running",
+      timestamp: new Date().toISOString(),
+    },
   });
 });
 
+// Coupon management routes
 router.get("/coupons", maskExceptions(listCouponsController));
 router.get("/coupons/:couponId", maskExceptions(getCouponByIdController));
 router.post("/coupons", maskExceptions(createCouponController));
-router.delete("/coupons/:couponId", maskExceptions(deleteCouponController));
 router.put("/coupons/:couponId", maskExceptions(updateCouponController));
+router.delete("/coupons/:couponId", maskExceptions(deleteCouponController));
+
+// Discount application routes
 router.post(
   "/applicable-coupons",
   maskExceptions(getApplicableCouponsController)

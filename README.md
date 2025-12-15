@@ -1,6 +1,6 @@
 
 ```markdown
-# 🛍️ Discount Service
+# Discount Service
 
 A lightweight, extensible service for managing and applying discount coupons in shopping cart workflows.
 
@@ -8,7 +8,7 @@ A lightweight, extensible service for managing and applying discount coupons in 
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 - **build/**: Compiled JavaScript files
@@ -26,15 +26,29 @@ A lightweight, extensible service for managing and applying discount coupons in 
 
 ---
 
-## Features Implemented
+## Future Features
 
-### Discount Support
+Based on the codebase, these features could be implemented next:
 
-- **Cart-wide Percentage Discounts (`CART_WISE`)**
-- **Product-specific Discounts (`PRODUCT_WISE`)**
-- **Buy X Get Y Deals (`BXGY`)**
+1. **Database Integration** - Replace in-memory storage with a persistent database
+2. **Authentication & Authorization** - Secure coupon management endpoints
+3. **Advanced Discount Rules** - Implement more complex eligibility rules
+4. **Discount Stacking** - Allow multiple compatible discounts to be combined
+5. **Usage Analytics** - Track coupon usage and effectiveness
+6. **User-specific Discounts** - Target discounts to specific user segments
+7. **Discount Code Generation** - Create unique discount codes for marketing campaigns
 
-### 🔐 API Endpoints
+## Constraints and Issues
+
+- **In-memory Storage** - Currently using array-based storage that resets on service restart
+- **Single Discount Application** - Only applies one discount at a time (most beneficial)
+- **No Authentication** - API endpoints lack proper security
+- **Limited Validation** - Some edge cases might not be fully handled
+- **Error Handling** - Could be more comprehensive for specific error types
+- **Testing** - No automated tests visible in the codebase
+- **UX** - BXGY coupons don't auto-apply you have to add both the buy products and get products for the discount to be applicable
+
+### API Endpoints
 
 #### Coupon Management
 
@@ -55,16 +69,7 @@ A lightweight, extensible service for managing and applying discount coupons in 
 
 ---
 
-## 🧠 Core Utilities
-
-- Standardized HTTP responses
-- Central error handling & masking
-- Expiration checks
-- Cart total and discount application logic
-
----
-
-## 🛠️ Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -110,11 +115,11 @@ By default, the API runs at **[http://localhost:3000/api](http://localhost:3000/
 
 ---
 
-## 🧪 API Usage Examples
+## API Usage Examples
 
 Use curl, Postman, or similar tools.
 
-### 📌 Coupon Management
+### Coupon Management
 
 #### List Coupons
 
@@ -171,7 +176,7 @@ curl -X POST http://localhost:3000/api/coupons \
 
 ---
 
-### 🛍️ Discount Application
+### Discount Application
 
 #### Find Applicable Coupons
 
@@ -201,7 +206,7 @@ curl -X POST http://localhost:3000/api/apply-coupon/your-coupon-id \
 
 ---
 
-## 🧠 Example Workflow
+## Example Workflow
 
 1. **Create a cart-wide discount**:
 

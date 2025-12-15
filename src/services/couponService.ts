@@ -2,8 +2,6 @@ import { generateNewCouponId } from "../utils/generateNewCouponId";
 import { CouponType } from "../types/couponType";
 import { coupons } from "../data/coupons";
 import { checkIsCouponExpired } from "../utils/checkIsCouponExpired";
-import { CartType } from "../types/cartType";
-import { calculateCartTotal } from "../utils/calculateCartTotal";
 
 export function listCoupons({ showExpired }: { showExpired: boolean }) {
   if (showExpired) {
