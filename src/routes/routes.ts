@@ -36,7 +36,7 @@ router.post(
 router.post("/apply-coupon/:couponId", maskExceptions(applyCouponController));
 
 // Catch all for invalid paths
-router.all("/:any(*)", (req: Request, res: Response) => {
+router.all("*", (req: Request, res: Response) => {
   notFound(res, "Endpoint not found");
 });
 
