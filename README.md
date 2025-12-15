@@ -249,7 +249,7 @@ Response will include totals, discount value, and final price.
 
 ---
 
-## 📡 Health Endpoint
+## Health Endpoint
 
 ```bash
 curl http://localhost:3000/api/health
@@ -257,7 +257,7 @@ curl http://localhost:3000/api/health
 
 ---
 
-## 🧩 What’s Next
+## What’s Next
 
 This service is functional and extensible. Some future improvements could include:
 
